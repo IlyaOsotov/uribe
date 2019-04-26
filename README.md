@@ -1,6 +1,8 @@
 # Uribe
 
-**TODO: Add description**
+[![Build Status](https://travis-ci.com/IlyaOsotov/uribe.svg?branch=master)](https://travis-ci.com/IlyaOsotov/uribe)
+
+URI builder for Elixir lang
 
 ## Installation
 
