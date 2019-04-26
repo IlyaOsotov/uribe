@@ -4,15 +4,16 @@ defmodule Uribe do
   """
 
   @doc """
-  Hello world.
+  Adding query to URI
 
   ## Examples
 
-      iex> Uribe.hello()
-      :world
+      iex> uri = URI.parse("https://google.com") |> Uribe.add_query(%{"foo" => "bar"})
+      iex> uri.query
+      "foo=bar"
 
   """
-  def hello do
-    :world
+  def add_query(uri, query) do
+    %{ uri | query: URI.encode_query(query) }
   end
 end
