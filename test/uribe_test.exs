@@ -5,6 +5,6 @@ defmodule UribeTest do
   test "adding query" do
     uri = URI.parse("https://google.com") |> Uribe.add_query(%{"foo" => "bar"})
 
-    uri.query == "foo=bar"
+    assert uri.query == "foo=bar"
   end
 end
