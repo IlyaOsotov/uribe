@@ -16,9 +16,9 @@ defmodule Uribe do
       iex> uri.query
       "foo=baz"
 
-      iex> uri = URI.parse("https://google.com?foo=bar") |> Uribe.add_query(%{"foo" => "baz"})
+      iex> uri = URI.parse("https://google.com?foo=bar") |> Uribe.add_query(%{"foo" => "baz", "bar" => "baz"})
       iex> uri.query
-      "foo=baz"
+      "bar=baz&foo=baz"
 
   """
   def add_query(uri, query) do
