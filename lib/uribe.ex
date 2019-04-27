@@ -4,7 +4,7 @@ defmodule Uribe do
   """
 
   @doc """
-  Adding query to URI
+  Add query to URI
 
   ## Examples
 
@@ -12,9 +12,18 @@ defmodule Uribe do
       iex> uri.query
       "foo=bar"
 
+      iex> uri = URI.parse("https://google.com") |> Uribe.add_query(%{"foo" => "bar"}) |> Uribe.add_query(%{"foo" => "baz"})
+      iex> uri.query
+      "foo=baz"
+
+      iex> uri = URI.parse("https://google.com?foo=bar") |> Uribe.add_query(%{"foo" => "baz"})
+      iex> uri.query
+      "foo=baz"
+
   """
   def add_query(uri, query) do
-    %{ uri | query: URI.encode_query(query) }
+    uri_query = (uri.query || "") |> URI.query_decoder |> Enum.into(%{}) |> Map.merge(query)
+    %{ uri | query: URI.encode_query(uri_query) }
   end
 
   @doc """
