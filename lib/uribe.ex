@@ -1,6 +1,7 @@
 defmodule Uribe do
   @moduledoc """
   Documentation for Uribe.
+  Uribe always receives URI in the first argument and always returns URI
   """
 
   @doc """
