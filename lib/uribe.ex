@@ -22,7 +22,7 @@ defmodule Uribe do
 
   """
   def add_query(uri, query) do
-    uri_query = (uri.query || "") |> URI.query_decoder |> Enum.into(%{}) |> Map.merge(query)
+    uri_query = query_to_enum(uri.query) |> Map.merge(query)
     %{ uri | query: URI.encode_query(uri_query) }
   end
 
@@ -39,14 +39,24 @@ defmodule Uribe do
       iex> uri.query
       "foo=bar"
 
-      iex> uri = URI.parse("https://google.com?foo=bar&baz=foo") |> Uribe.remove_param("baz") |> Uribe.remove_param("foo")
+      iex> uri = URI.parse("https://google.com?foo=bar&baz=foo") |> Uribe.remove_param(["baz", "foo"])
       iex> uri.query
       ""
 
   """
-  def remove_param(uri, param) do
-    query = uri.query |> URI.query_decoder |> Enum.into(%{}) |> Map.delete(param)
+  def remove_param(uri, param) when is_binary(param) do
+    query = query_to_enum(uri.query) |> Map.delete(param)
     
     %{ uri | query: URI.encode_query(query) }
+  end
+
+  def remove_param(uri, params) when is_list(params) do
+    query = query_to_enum(uri.query) |> Map.drop(params)
+    
+    %{ uri | query: URI.encode_query(query) }
+  end
+
+  defp query_to_enum(query) do
+    (query || "") |> URI.query_decoder |> Enum.into(%{})
   end
 end
