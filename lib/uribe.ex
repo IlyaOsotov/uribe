@@ -31,26 +31,26 @@ defmodule Uribe do
 
   ## Examples
 
-      iex> uri = URI.parse("https://google.com?foo=bar&baz=foo") |> Uribe.remove_param("foo")
+      iex> uri = URI.parse("https://google.com?foo=bar&baz=foo") |> Uribe.remove("foo")
       iex> uri.query
       "baz=foo"
 
-      iex> uri = URI.parse("https://google.com?foo=bar&baz=foo") |> Uribe.remove_param("baz")
+      iex> uri = URI.parse("https://google.com?foo=bar&baz=foo") |> Uribe.remove("baz")
       iex> uri.query
       "foo=bar"
 
-      iex> uri = URI.parse("https://google.com?foo=bar&baz=foo") |> Uribe.remove_param(["baz", "foo"])
+      iex> uri = URI.parse("https://google.com?foo=bar&baz=foo") |> Uribe.remove(["baz", "foo"])
       iex> uri.query
       ""
 
   """
-  def remove_param(uri, param) when is_binary(param) do
+  def remove(uri, param) when is_binary(param) do
     query = query_to_enum(uri.query) |> Map.delete(param)
     
     %{ uri | query: URI.encode_query(query) }
   end
 
-  def remove_param(uri, params) when is_list(params) do
+  def remove(uri, params) when is_list(params) do
     query = query_to_enum(uri.query) |> Map.drop(params)
     
     %{ uri | query: URI.encode_query(query) }
