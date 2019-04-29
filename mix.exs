@@ -5,7 +5,7 @@ defmodule Uribe.MixProject do
     [
       app: :uribe,
       name: "Uribe",
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.7",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,

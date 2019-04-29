@@ -57,6 +57,42 @@ defmodule Uribe do
     %{ uri | query: URI.encode_query(query) }
   end
 
+  @doc """
+  Set path for URI
+
+  ## Examples
+
+      iex> uri = URI.parse("https://google.com") |> Uribe.path("/foo/bar")
+      iex> uri.path
+      "/foo/bar"
+
+      iex> uri = URI.parse("https://google.com/bar") |> Uribe.path("/foo")
+      iex> URI.to_string(uri)
+      "https://google.com/foo"
+
+  """
+  def path(uri, path) do
+    %{ uri | path: path }
+  end
+
+  @doc """
+  Remove the entire path, query and set path
+
+  ## Examples
+
+      iex> uri = URI.parse("https://google.com") |> Uribe.cut("/foo/bar")
+      iex> uri.path
+      "/foo/bar"
+
+      iex> uri = URI.parse("https://google.com/bar?baz=qux") |> Uribe.cut("/foo")
+      iex> URI.to_string(uri)
+      "https://google.com/foo"
+
+  """
+  def cut(uri, path) do
+    %{ uri | path: path, query: nil }
+  end
+
   defp query_to_enum(query) do
     (query || "") |> URI.query_decoder |> Enum.into(%{})
   end
