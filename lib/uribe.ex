@@ -28,6 +28,21 @@ defmodule Uribe do
   end
 
   @doc """
+  Remove all params and path from URI
+
+  ## Examples
+
+      iex> uri = URI.parse("https://google.com/foo/bar?foo=bar&baz=foo") |> Uribe.clear
+      iex> URI.to_string(uri)
+      "https://google.com"
+
+  """
+
+  def clear(uri) do
+    %{ uri | query: nil, path: nil, fragment: nil }
+  end
+
+  @doc """
   Remove param from URI query
 
   ## Examples
